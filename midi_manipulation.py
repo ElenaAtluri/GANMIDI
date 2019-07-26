@@ -1,6 +1,11 @@
 import midi
 import numpy as np
+import glob
+import os
+import music21
 
+majors = dict([("A-", 4),("A", 3),("B-", 2),("B", 1),("C", 0),("D-", -1),("D", -2),("E-", -3),("E", -4),("F", -5),("G-", 6),("G", 5)])
+minors = dict([("A-", 1),("A", 0),("B-", -1),("B", -2),("C", -3),("D-", -4),("D", -5),("E-", 6),("E", 5),("F", 4),("G-", 3),("G", 2)])
 
 lowerBound = 24
 upperBound = 102
@@ -110,3 +115,20 @@ def noteStateMatrixToMidi(statematrix, name="example", span=span):
     track.append(eot)
 
     midi.write_midifile("{}.mid".format(name), pattern)
+    
+def transpose(file):
+    score = music21.converter.parse(file)
+    key = score.analyze('key')
+    # print key.tonic.name, key.mode
+    if key.mode == "major":
+        halfSteps = majors[key.tonic.name]
+    elif key.mode == "minor":
+        halfSteps = minors[key.tonic.name]
+    
+    newscore = score.transpose(halfSteps)
+    return streamToMidiFile(newscore)
+#     return newscore
+    key = newscore.analyze('key')
+    print(key.tonic.name, key.mode)
+    newFileName = file
+    newscore.write('midi', newFileName)
