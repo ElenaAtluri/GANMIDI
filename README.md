@@ -15,4 +15,5 @@ Find more information at https://guitar.ucsd.edu/cosmos9/index.php/2019_Projects
 * librosa
 
 Made with ❤ at COSMOS UCSD 2019 by Conan Lu, Satvik Nagpal, and Elena Atluri
+
 Special thanks to Dr. Shlomo Dubnov, professor of Computer Music at UCSD
